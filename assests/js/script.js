@@ -10,20 +10,37 @@ $("#currentDay").text("The current date is " + moment().format('MMMM Do YYYY'));
      localStorage.setItem(hour, task);
   });
 
-function loadPlanner() {
+
+  function loadPlanner() {
 
     $(".hour").each(function() {
         var currHour = $(this).text();
-        var currPlan = localStorage.getItem(currHour);
+        var currTask = localStorage.getItem(currHour);
 
-        console.log(this);
-        console.log(currHour);
+        console.log(currTask);
 
-        if(currPlan !== null) {
-            $(this).siblings(".plan").val(currPlan);
+        if(currTask !== null) {
+            $(this).siblings(".description").val(currTask);
         }
     });
-};
+}
+
+var whatTimeIsIt = parseInt(moment().format('h'));
+console.log(whatTimeIsIt);
+
+
+$(".time-block").each(function() {
+    var taskTime = parseInt($(this).attr("id"));
+    console.log(taskTime);
+
+    if (whatTimeIsIt > taskTime) {
+        $(this).addClass("past")
+    } else if (taskTime === whatTimeIsIt) {
+        $(this).addClass("present")
+    } else {
+        $(this).addClass("future")
+    };
+});
+
 
 loadPlanner();
-
